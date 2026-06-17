@@ -9,6 +9,8 @@ type NavButtonProps = {
   ariaHaspopup?: ButtonProps["aria-haspopup"];
   href?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  onMouseEnter?: MouseEventHandler<HTMLButtonElement>;
+  onMouseLeave?: MouseEventHandler<HTMLButtonElement>;
 };
 
 function NavButton({
@@ -19,6 +21,8 @@ function NavButton({
   ariaHaspopup,
   href,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
 }: NavButtonProps) {
   return (
     <Button
@@ -29,6 +33,8 @@ function NavButton({
       aria-haspopup={ariaHaspopup}
       aria-expanded={ariaExpanded}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {children}
     </Button>

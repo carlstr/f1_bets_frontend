@@ -39,23 +39,27 @@ function NavBar() {
 
             return (
               <div key={item.label}>
-                <NavButton
-                  id={buttonId}
-                  ariaControls={isMenuOpen ? menuId : undefined}
-                  ariaHaspopup="true"
-                  ariaExpanded={isMenuOpen ? "true" : undefined}
-                  onClick={(event) => handleMenuOpen(event, item.label)}
-                >
-                  {item.label}
-                </NavButton>
-                <NavMenu
-                  id={menuId}
-                  labelledBy={buttonId}
-                  anchorEl={anchorEl}
-                  open={isMenuOpen}
-                  onClose={handleMenuClose}
-                  items={item.items}
-                />
+                <Box key={item.label}>
+                  <NavButton
+                    id={buttonId}
+                    ariaControls={isMenuOpen ? menuId : undefined}
+                    ariaHaspopup="true"
+                    ariaExpanded={isMenuOpen ? "true" : undefined}
+                    onMouseEnter={(event) => handleMenuOpen(event, item.label)}
+                    onClick={(event) => handleMenuOpen(event, item.label)}
+                  >
+                    {item.label}
+                  </NavButton>
+                  <NavMenu
+                    id={menuId}
+                    labelledBy={buttonId}
+                    anchorEl={anchorEl}
+                    open={isMenuOpen}
+                    onClose={handleMenuClose}
+                    items={item.items}
+                    onMouseLeave={handleMenuClose}
+                  />
+                </Box>
               </div>
             );
           })}

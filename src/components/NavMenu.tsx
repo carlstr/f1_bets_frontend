@@ -12,6 +12,8 @@ type NavMenuProps = {
   open: boolean;
   items: NavMenuItem[];
   onClose: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 function NavMenu({
@@ -21,6 +23,8 @@ function NavMenu({
   open,
   items,
   onClose,
+  onMouseEnter,
+  onMouseLeave,
 }: NavMenuProps) {
   return (
     <Menu
@@ -29,6 +33,18 @@ function NavMenu({
       open={open}
       onClose={onClose}
       slotProps={{
+        root: {
+          sx: {
+            pointerEvents: "none",
+          },
+        },
+        paper: {
+          onMouseEnter,
+          onMouseLeave,
+          sx: {
+            pointerEvents: "auto",
+          },
+        },
         list: {
           "aria-labelledby": labelledBy,
         },
