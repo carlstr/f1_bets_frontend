@@ -1,8 +1,9 @@
 import { type MouseEvent, useState } from "react";
-import { AppBar, Toolbar, Box } from "@mui/material";
+import { AppBar, Toolbar, Box, Button } from "@mui/material";
 import NavButton from "./NavButton";
 import { navItems } from "./NavItems";
 import NavMenu from "./NavMenu";
+import favicon from "../assets/favicon.png";
 
 function NavBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -22,6 +23,10 @@ function NavBar() {
   return (
     <AppBar position="static">
       <Toolbar>
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <img src={favicon} alt="" />
+        </Box>
+
         <Box sx={{ display: "flex", gap: 1 }}>
           {navItems.map((item) => {
             if (!("items" in item)) {
@@ -63,6 +68,11 @@ function NavBar() {
               </div>
             );
           })}
+        </Box>
+
+        <Box sx={{ display: "flex", marginLeft: "auto", gap: 1 }}>
+          <Button variant="contained">Login</Button>
+          <Button variant="contained">Register</Button>
         </Box>
       </Toolbar>
     </AppBar>
