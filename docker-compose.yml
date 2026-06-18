@@ -2,10 +2,10 @@ services:
   frontend:
     build:
       context: ./f1_bets_frontend
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     container_name: f1_bets_frontend
     ports:
-      - "3001:3001"
+      - "3002:3001"
     volumes:
       - ./f1_bets_frontend/src:/app/src
     depends_on:
@@ -20,7 +20,7 @@ services:
   backend:
     build:
       context: ./f1_bets_backend
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     container_name: f1_bets_backend
     ports:
       - "3000:3000"
@@ -28,9 +28,46 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - HOST=0.0.0.0
+      - DATABASE_URL=postgres://f1_bets_user:f1_bets_password@database:5432/f1_bets
+    depends_on:
+      - database
+    volumes:
+      - backend-data:/app/data
+    networks:
+      - app-network
+
+  database:
+    image: postgres:16-alpine
+    container_name: f1_bets_database
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: f1_bets
+      POSTGRES_USER: f1_bets_user
+      POSTGRES_PASSWORD: f1_bets_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  adminer:
+    image: adminer:latest
+    container_name: f1_bets_adminer
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: database
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
     networks:
       - app-network
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  backend-data:
+  postgres-data:
